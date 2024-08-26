@@ -14,3 +14,4 @@ import 'core-js/es/weak-map';
 import 'core-js/es/weak-set';
 import 'core-js/es/reflect';
 import 'zone.js';
+import 'core-js/es/set';

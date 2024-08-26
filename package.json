@@ -23,6 +23,7 @@
     "@popperjs/core": "^2.11.6",
     "@zegocloud/zego-uikit-prebuilt": "^2.6.1",
     "chart.js": "^4.4.3",
+    "core-js": "^3.38.1",
     "flowbite": "^2.3.0",
     "ng2-search-filter": "^0.5.1",
     "ngx-cookie-service": "^16.1.0",

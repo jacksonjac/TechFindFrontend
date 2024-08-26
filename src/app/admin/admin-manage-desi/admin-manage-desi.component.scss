@@ -1,0 +1,41 @@
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination-container .ngx-pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination-container .ngx-pagination li {
+    margin: 0 5px;
+}
+
+.pagination-container .ngx-pagination .current {
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.pagination-container .ngx-pagination .disabled {
+    color: #ccc;
+    pointer-events: none;
+}
+
+.pagination-container .ngx-pagination a {
+    color: #007bff;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #007bff;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination-container .ngx-pagination a:hover {
+    background-color: #007bff;
+    color: white;
+}

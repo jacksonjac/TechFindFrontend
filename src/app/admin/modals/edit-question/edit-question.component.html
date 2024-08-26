@@ -1,0 +1,69 @@
+<section>
+    <form class="p-4 md:p-5" [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+      <div class="grid gap-4 mb-4 grid-cols-2">
+        <div class="col-span-2">
+          <label for="question" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Question</label>
+          <input type="text" formControlName="question" id="question" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type your question here" required>
+          <div *ngIf="questionForm.controls['question'].invalid && (questionForm.controls['question'].dirty || questionForm.controls['question'].touched)" class="text-red-500 text-xs mt-1">
+            <span *ngIf="questionForm.controls['question'].errors?.['required']">Question is required.</span>
+            <span *ngIf="questionForm.controls['question'].errors?.['pattern']">Only alphanumeric characters and spaces are allowed.</span>
+          </div>
+        </div>
+        <div class="col-span-2 sm:col-span-1">
+          <label for="option1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Option 1</label>
+          <input type="text" formControlName="option1" id="option1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type option 1" required>
+          <div *ngIf="questionForm.controls['option1'].invalid && (questionForm.controls['option1'].dirty || questionForm.controls['option1'].touched)" class="text-red-500 text-xs mt-1">
+            <span *ngIf="questionForm.controls['option1'].errors?.['required']">Option 1 is required.</span>
+            <span *ngIf="questionForm.controls['option1'].errors?.['pattern']">Only alphanumeric characters and spaces are allowed.</span>
+          </div>
+        </div>
+        <div class="col-span-2 sm:col-span-1">
+          <label for="option2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Option 2</label>
+          <input type="text" formControlName="option2" id="option2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type option 2" required>
+          <div *ngIf="questionForm.controls['option2'].invalid && (questionForm.controls['option2'].dirty || questionForm.controls['option2'].touched)" class="text-red-500 text-xs mt-1">
+            <span *ngIf="questionForm.controls['option2'].errors?.['required']">Option 2 is required.</span>
+            <span *ngIf="questionForm.controls['option2'].errors?.['pattern']">Only alphanumeric characters and spaces are allowed.</span>
+          </div>
+        </div>
+        <div class="col-span-2 sm:col-span-1">
+          <label for="option3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Option 3</label>
+          <input type="text" formControlName="option3" id="option3" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type option 3" required>
+          <div *ngIf="questionForm.controls['option3'].invalid && (questionForm.controls['option3'].dirty || questionForm.controls['option3'].touched)" class="text-red-500 text-xs mt-1">
+            <span *ngIf="questionForm.controls['option3'].errors?.['required']">Option 3 is required.</span>
+            <span *ngIf="questionForm.controls['option3'].errors?.['pattern']">Only alphanumeric characters and spaces are allowed.</span>
+          </div>
+        </div>
+        <div class="col-span-2 sm:col-span-1">
+          <label for="correctAnswer" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correct Answer (Option 1/2/3)</label>
+          <select formControlName="correctAnswer" id="correctAnswer" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+            <option value="" disabled>Select correct answer</option>
+            <option [value]="questionForm.get('option1')?.value">Option 1</option>
+            <option [value]="questionForm.get('option2')?.value">Option 2</option>
+            <option [value]="questionForm.get('option3')?.value">Option 3</option>
+          </select>
+          
+          <div *ngIf="questionForm.controls['correctAnswer'].invalid && (questionForm.controls['correctAnswer'].dirty || questionForm.controls['correctAnswer'].touched)" class="text-red-500 text-xs mt-1">
+            <span *ngIf="questionForm.controls['correctAnswer'].errors?.['required']">Correct Answer is required.</span>
+          </div>
+        </div>
+        <div class="col-span-2">
+          <label for="designation" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Designation</label>
+          <select formControlName="designation" id="designation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+            <option value="" disabled>Select designation</option>
+            <option *ngFor="let designation of designations" [value]="designation">{{ designation }}</option>
+          </select>
+          <div *ngIf="questionForm.controls['designation'].invalid && (questionForm.controls['designation'].dirty || questionForm.controls['designation'].touched)" class="text-red-500 text-xs mt-1">
+            <span *ngIf="questionForm.controls['designation'].errors?.['required']">Designation is required.</span>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 2a1 1 0 01.993.883L11 3v6h6a1 1 0 01.117 1.993L17 11h-6v6a1 1 0 01-1.993.117L9 17v-6H3a1 1 0 01-.117-1.993L3 9h6V3a1 1 0 01.883-.993L10 2z" />
+        </svg>
+        Save Changes
+      </button>
+    </form>
+    <button (click)="onNoClick()" class="mt-4 text-red-600">Cancel</button>
+  </section>
+  

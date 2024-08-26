@@ -1,0 +1,102 @@
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    max-width: 600px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+  }
+  
+  .messages {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 16px;
+  }
+  
+  .message {
+    margin-bottom: 8px;
+    padding: 8px;
+    background-color: #f1f1f1;
+    border-radius: 4px;
+  }
+  
+  .input-container {
+    display: flex;
+  }
+  
+  input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 8px;
+  }
+  
+  button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Add this to your chat-page.component.scss */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.new-message {
+  display: flex;
+  align-items: center;
+}
+
+.new-message input {
+  flex: 1;
+  padding: 10px;
+  margin-right: 10px;
+}
+
+.message {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.message p {
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 70%;
+}
+
+.message.user {
+  justify-content: flex-start;
+}
+
+.message.user p {
+  background-color: #d1f5d3;
+  margin-left: auto;
+  background-color: #007bff;
+}
+
+.message.technician {
+  justify-content: flex-end;
+}
+
+.message.technician p {
+  background-color: #d1f5d3;
+  margin-left: auto;
+}

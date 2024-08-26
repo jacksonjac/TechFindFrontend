@@ -1,0 +1,30 @@
+<div class="container mx-auto p-4">
+    <h2 class="text-gray-100 text-2xl">Meeting List</h2>
+    <table class=" bg-white w-full mt-8 border bg-gradient-to-r from-blue-800 to-indigo-900 shadow-red-4xl ring-blue-500 ring-opacity-50 border-b">
+      <thead>
+        <tr>
+          <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-left">Date</th>
+          <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-left">Start Time</th>
+          <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-left">End Time</th>
+          <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-left">Username</th>
+          <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-left">Status</th>
+          <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-left">Create Date</th>
+          <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-left">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let meeting of meetings" class=" text-gray-100">
+          <td class="py-2 px-4 border-b border-gray-100 text-left">{{ meeting.meetingDate | date: 'dd-MM-yyyy' }}</td>
+          <td class="py-2 px-4 border-b border-gray-200 text-left">{{ meeting.startTime |timeFormat  }}</td>
+          <td class="py-2 px-4 border-b border-gray-200 text-left">{{ meeting.endTime |timeFormat }}</td>
+          <td class="py-2 px-4 border-b border-gray-200 text-left">{{ meeting.userId.name }}</td>
+          <td class="py-2 px-4 border-b border-gray-200 text-left">{{ meeting.status }}</td>
+          <td class="py-2 px-4 border-b border-gray-200 text-left">{{ meeting.createdAt | date: 'dd-MM-yyyy HH:mm' }}</td>
+          <td class="py-2 px-4 border-b border-gray-200 text-left">
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Edit</button>
+            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded ml-2">Cancel</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>

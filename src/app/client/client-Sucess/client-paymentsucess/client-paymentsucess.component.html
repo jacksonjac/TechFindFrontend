@@ -1,0 +1,28 @@
+<div class="bg-gray-100 w-screen flex items-center justify-center">
+    <div class="bg-white p-4 rounded-lg shadow-lg w-full max-w-xl">
+        <div class="text-center">
+            <svg viewBox="0 0 24 24" class="text-green-600 w-16 h-16 mx-auto my-6">
+                <path fill="currentColor"
+                    d="M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z">
+                </path>
+            </svg>
+            <h3 class="md:text-2xl text-xl text-gray-900 font-semibold">Appointment has been Schedule</h3>
+            <p class="text-gray-600 my-4">Thank you for completing your secure online payment. Your appointment has been successfully booked. Below are the details:</p>
+
+            <div *ngIf="AppoimentData" class="text-left mt-2">
+                <p class="text-gray-600">Technician Name: <span class="font-bold text-indigo-600">{{AppoimentData.technician.name}}</span></p>
+                <p class="text-gray-600">Designation: <span class="font-bold text-indigo-600">{{AppoimentData.technician.designation.DesiName}}</span></p>
+                <p class="text-gray-600">Phone: <span class="font-bold text-indigo-600">{{AppoimentData.technician.phone}}</span></p>
+                <p class="text-gray-600">Service Charge: <span class="font-bold text-indigo-600">₹{{AppoimentData.technician.serviceCharge}}</span></p>
+                <p class="text-gray-600">Booking Date: <span class="font-bold text-indigo-600">{{AppoimentData.slot.date }}</span></p>
+                <p class="text-gray-600">Booking Time: <span class="font-bold text-indigo-600">{{AppoimentData.slot.time}}</span></p>
+                <p class="text-gray-600">Address: <span class="font-bold text-indigo-600">{{AppoimentData.address.fieldName}}, {{AppoimentData.address.houseName}}, {{AppoimentData.address.district}}, {{AppoimentData.address.pincode}}</span></p>
+            </div>
+
+            <div class="py-8 text-center">
+                <a routerLink="/techlist" class="px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 rounded-md">GO BACK</a>
+                <a href="/chat" class="px-12 bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 rounded-md ml-4">CHAT</a>
+            </div>
+        </div>
+    </div>
+</div>

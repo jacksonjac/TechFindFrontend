@@ -1,0 +1,91 @@
+
+<div class="flex-row justify-center">
+
+  <div class="">
+    <h1 class="flex items-center text-5xl font-extrabold dark:text-white"><span class="bg-blue-100 text-blue-800 text-2xl font-semibold me-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-2">Technicians</span></h1>  
+  </div>
+
+
+  <div class="flex space-x-4">
+    <div class="flex-1">
+      <select id="dropdown-menu" class="block w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:bg-white focus:border-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              [(ngModel)]="selectedDesignation" (change)="selectDesignation($event)">
+        <option value="all" [selected]="selectedDesignation === 'all'">All</option>
+        <option *ngFor="let designation of designations" [value]="designation._id">{{ designation.DesiName }}</option>
+      </select>
+    </div>
+    
+    <div class="relative flex-1">
+      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+        </svg>
+      </div>
+      <input type="search" id="default-search" class="block w-full pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search by Name,Designation,District" [(ngModel)]="searchText" required />
+    </div>
+  </div>
+  
+  
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <tr>
+        <th scope="col" class="px-6 py-3">N</th>
+        <th scope="col" class="px-6 py-3">Email</th>
+        <th scope="col" class="px-6 py-3">District</th>
+
+        <th scope="col" class="px-6 py-3">Designation</th>
+        <th scope="col" class="px-6 py-3">Verified</th>
+        <th scope="col" class="px-6 py-3">Access</th>
+        <th scope="col" class="px-6 py-3">Phone</th>
+        <th scope="col" class="px-6 py-3">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tech of Techlist | search:searchText  | paginate: { itemsPerPage: 5, currentPage: p }" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+        <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+          <div class="ps-3">
+            <div class="text-base font-semibold">{{tech.name}}</div>
+          </div>  
+        </th>
+        <td class="px-6 py-4">{{tech.email}}</td>
+        <td class="px-6 py-4">{{tech.district}}</td>
+        <td class="px-6 py-4">{{tech.designation.DesiName}}</td>
+        <td class="px-6 py-4">
+          <div class="flex items-center">
+            <div class="h-2.5 w-2.5 rounded-full" [ngClass]="tech.verified ? 'bg-green-500' : 'bg-red-500'"></div> {{ tech.verified ? 'Verified' : 'Not Verified' }}
+          </div>
+        </td>
+        <td class="px-6 py-4">
+          <div class="flex items-center space-x-4">
+            <button *ngIf="!tech.Approved" class="bg-green-600 text-white px-2 py-1 w-20 rounded flex items-center justify-center" (click)="approveTech(tech._id)">
+              <svg class="w-[30px] h-[30px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M7 11c.889-.086 1.416-.543 2.156-1.057a22.323 22.323 0 0 0 3.958-5.084 1.6 1.6 0 0 1 .582-.628 1.549 1.549 0 0 1 1.466-.087c.205.095.388.233.537.406a1.64 1.64 0 0 1 .384 1.279l-1.388 4.114M7 11H4v6.5A1.5 1.5 0 0 0 5.5 19v0A1.5 1.5 0 0 0 7 17.5V11Zm6.5-1h4.915c.286 0 .372.014.626.15.254.135.472.332.637.572a1.874 1.874 0 0 1 .215 1.673l-2.098 6.4C17.538 19.52 17.368 20 16.12 20c-2.303 0-4.79-.943-6.67-1.475"/>
+              </svg>
+              
+              
+              
+              Approve
+            </button>
+            <button *ngIf="tech.Approved" class="bg-red-600 text-white px-2 py-1 w-20 rounded flex items-center justify-center" (click)="denyTech(tech._id)">
+              <svg class="w-[30px] h-[30px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M17 13c-.889.086-1.416.543-2.156 1.057a22.322 22.322 0 0 0-3.958 5.084 1.6 1.6 0 0 1-.582.628 1.549 1.549 0 0 1-1.466.087 1.587 1.587 0 0 1-.537-.406 1.666 1.666 0 0 1-.384-1.279l1.389-4.114M17 13h3V6.5A1.5 1.5 0 0 0 18.5 5v0A1.5 1.5 0 0 0 17 6.5V13Zm-6.5 1H5.585c-.286 0-.372-.014-.626-.15a1.797 1.797 0 0 1-.637-.572 1.873 1.873 0 0 1-.215-1.673l2.098-6.4C6.462 4.48 6.632 4 7.88 4c2.302 0 4.79.943 6.67 1.475"/>
+              </svg>
+              Refuse
+            </button>
+          </div>
+          
+        </td>
+        <td class="px-6 py-4">{{tech.phone}}</td>
+        <td class="px-6 py-4">
+          <button *ngIf="!tech.blocked" class="bg-red-600 text-white px-2 py-1 w-20 rounded" (click)="blockTech(tech._id)">
+          Block</button>
+          <button *ngIf="tech.blocked" class="bg-lime-400-500 text-white px-2 py-1 w-20 rounded"  (click)="UnblockTech(tech._id)">Unblock</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+<div class="pagination-container">
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>

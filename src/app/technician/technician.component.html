@@ -1,0 +1,174 @@
+<div class="flex flex-col min-h-screen ">
+
+
+  <nav class="bg-gradient-to-r from-blue-800 to-indigo-900 shadow-red-4xl ring-blue-500 ring-opacity-50 border-b">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <img src="https://www.shutterstock.com/image-vector/initial-letter-ft-logotype-company-260nw-725759989.jpg" class="h-11 rounded-xl w-11" alt="FindTech Logo">
+        <span class="self-center text-2xl font-semibold whitespace-nowrap text-white font-variety dark:text-white">FindTech</span>
+      </a>
+  
+      <div class="flex md:order-2 space-x-4 rtl:space-x-reverse">
+        <!-- Notification Button -->
+        <ng-container *ngIf="loggedIn(); ">
+        <div class="relative">
+          <svg (click)="showNotificationPage()" class="w-8 h-8 text-gray-100 animate-wiggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M15.585 15.5H5.415A1.65 1.65 0 0 1 4 13a10.526 10.526 0 0 0 1.5-5.415V6.5a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v1.085c0 1.907.518 3.78 1.5 5.415a1.65 1.65 0 0 1-1.415 2.5zm1.915-11c-.267-.934-.6-1.6-1-2s-1.066-.733-2-1m-10.912 3c.209-.934.512-1.6.912-2s1.096-.733 2.088-1M13 17c-.667 1-1.5 1.5-2.5 1.5S8.667 18 8 17"/>
+          </svg>
+          <div class="px-1 bg-red-500 rounded-full text-center text-white text-sm absolute -top-3 -right-2">
+          {{notificationcount}}
+            <div class="absolute top-0 left-0 rounded-full -z-10 animate-ping bg-teal-200 w-full h-full"></div>
+          </div>
+        </div>
+      </ng-container>
+  
+        <!-- Profile Dropdown -->
+        <ng-container *ngIf="loggedIn(); else notLoggedIn">
+          <div class="relative" (click)="toggleDropdown()">
+            <img id="avatarButton" class="w-10 h-10 rounded-full cursor-pointer" [src]="imageurl" alt="User avatar">
+      
+            <!-- Dropdown menu -->
+            <div class="relative">
+              <div *ngIf="dropdownOpen" class="absolute right-0 mt-2 w-44 bg-gradient-to-r from-slate-900 to-slate-700 divide-y rounded-lg shadow z-50">
+                <div class="px-4 py-3 text-gray-100 text-xl dark:text-white">
+                  <div class="text-center text-red-100 ">{{ userName }}</div>
+                  
+                </div>
+                <ul class="py-2 text-sm text-gray-100 hover:text-blue-700 dark:text-gray-100">
+                  <li>
+                    <a routerLink="/technician/tech-Profile" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-gray-600">Profile</a>
+                  </li>
+                 
+                  <li>
+                    <a routerLink="technician/userBookings" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Booking</a>
+                  </li>
+                </ul>
+                <div class="py-1">
+                  <button (click)="logout()" class="block w-full text-left px-4 py-2 text-sm text-gray-100 hover:text-red-500">
+                    Sign out
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </ng-container>
+  
+        <!-- Not Logged In State -->
+        <ng-template #notLoggedIn>
+          <button routerLink="/technician/login" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
+          <button routerLink="/technician/quiz-start" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Signup</button>
+        </ng-template>
+  
+        <!-- Mobile Menu Button -->
+        <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+          </svg>
+        </button>
+      </div>
+      <ng-container *ngIf="loggedIn(); ">
+      <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+        <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-20 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          
+          <li class="relative">
+            <a routerLink="/technician/" class="bloc py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 flex items-center">
+              <svg class="w-[35px] h-[35px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5"/>
+              </svg>
+              
+              
+            </a>
+          </li>
+          <li class="relative">
+            <a routerLink="/technician/chatpage" class="bloc py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 flex items-center">
+              <svg class="w-[35px] h-[35px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17h6l3 3v-3h2V9h-2M4 4h11v8H9l-3 3v-3H4V4Z"/>
+              </svg>
+              
+            </a>
+          </li>
+          <li class="relative">
+            <a routerLink="/technician/slot-page/" class="bloc py-2 px-3 text-gray-100 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 flex items-center">
+              <svg class="w-[35px] h-[35px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"/>
+              </svg>
+              
+              
+            </a>
+          </li>
+          <li class="relative">
+            <a routerLink="/technician/schedule-meeting/" class="bloc py-2 px-3 text-gray-100 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 flex items-center">
+              <svg class="w-[35px] h-[35px] text-gray-100 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M14 7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7Zm2 9.387 4.684 1.562A1 1 0 0 0 22 17V7a1 1 0 0 0-1.316-.949L16 7.613v8.774Z" clip-rule="evenodd"/>
+</svg>
+
+              
+              
+              
+            </a>
+          </li>
+         
+        </ul>
+      </div>
+
+    </ng-container>
+
+    </div>
+  </nav>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <div class="P-2  flex-grow shadow-4xl  bg-gradient-to-r from-blue-800 to-indigo-900 border-white">
+  <router-outlet></router-outlet> 
+  </div>
+
+
+
+
+  
+  <footer class="bg-gradient-to-r from-blue-800 to-indigo-900 border shadow dark:bg-gray-900 ">
+    <div class="w-full max-w-screen-xl mx-auto  md:py-8">
+        <div class="sm:flex sm:items-center sm:justify-between">
+            <a href="https://flowbite.com/" class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
+              <img src="https://www.shutterstock.com/image-vector/initial-letter-ft-logotype-company-260nw-725759989.jpg" class="h-11 rounded-xl w-11" alt="Flowbite Logo">
+                <span class="self-center text-2xl font-semibold  text-white">FindTech</span>
+            </a>
+            <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+                <li>
+                    <a href="#" class="hover:underline me-4 md:me-6">About</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline me-4 md:me-6">Licensing</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline">Contact</a>
+                </li>
+            </ul>
+        </div>
+        <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+        <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="https://flowbite.com/" class="hover:underline">FindTech™</a>. All Rights Reserved.</span>
+    </div>
+  </footer>
+  
+  </div>
+  
+    
+  
+  

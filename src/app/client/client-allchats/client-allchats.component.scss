@@ -1,0 +1,16 @@
+.user-message {
+    background-color: #E0FFD8; /* Light green */
+    align-self: flex-end; /* Align user messages to the right */
+    text-align: right;
+  }
+  
+  .technician-message {
+    background-color: #D8E0FF; /* Light blue */
+    align-self: flex-start; /* Align technician messages to the left */
+    text-align: left;
+  }
+  
+  .message-item {
+    max-width: 70%; /* Limit the width of the messages */
+  }
+  

@@ -1,0 +1,79 @@
+<div class="container mx-auto p-4 ">
+    <div class="flex items-center justify-between mb-2 ">
+      <h2 class="text-1xl text-gray-100 font-bold">Schedule a Meeting</h2>
+      <button routerLink="/technician/meeting-list/" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+        View Meetings
+      </button>
+    </div>
+  
+    <form [formGroup]="scheduleForm" (ngSubmit)="onSubmit() " >
+      <!-- Select User -->
+      <div *ngIf="scheduleForm" class="mb-2">
+        <label for="userId" class="block text-gray-100 text-sm mb-2">Select User:</label>
+        <select formControlName="userId" id="userId" class="w-full rounded-full p-2 border">
+          <option *ngFor="let user of UsersList" [value]="user._id">{{ user.name }}</option>
+        </select>
+        <div *ngIf="scheduleForm.controls['userId']?.invalid && scheduleForm.controls['userId']?.touched" class="text-red-500 text-sm">
+          User is required.
+        </div>
+      </div>
+  
+      <!-- Meeting Date -->
+      <div class="mb-2">
+        <label for="meetingDate" class="block text-gray-100 text-sm mb-2">Meeting Date:</label>
+        <input type="date" formControlName="meetingDate" id="meetingDate" class="w-full p-2 border rounded-full">
+        <div *ngIf="scheduleForm.controls['meetingDate']?.errors?.['pastDate'] && scheduleForm.controls['meetingDate']?.touched" class="text-red-500 text-sm">
+          The meeting date must be in the future.
+        </div>
+        <div *ngIf="scheduleForm.controls['meetingDate']?.invalid && scheduleForm.controls['meetingDate']?.touched && !scheduleForm.controls['meetingDate']?.errors?.['pastDate']" class="text-red-500 text-sm">
+          Date is required.
+        </div>
+      </div>
+  
+      <!-- Start Time -->
+      <div class="mb-2">
+        <label for="startTime" class="block text-gray-100 text-sm mb-2">Start Time:</label>
+        <input type="time" formControlName="startTime" id="startTime" class="w-full p-2 border rounded-full">
+        <div *ngIf="scheduleForm.controls['startTime']?.errors?.['pastTime'] && scheduleForm.controls['startTime']?.touched" class="text-red-500 text-sm">
+          The start time must be in the future.
+        </div>
+        <div *ngIf="scheduleForm.controls['startTime']?.invalid && scheduleForm.controls['startTime']?.touched && !scheduleForm.controls['startTime']?.errors?.['pastTime']" class="text-red-500 text-sm">
+          Start time is required.
+        </div>
+      </div>
+  
+      <!-- End Time -->
+      <div class="mb-2">
+        <label for="endTime" class="block text-gray-100 text-sm mb-2">End Time:</label>
+        <input type="time" formControlName="endTime" id="endTime" class="w-full p-2 border rounded-full">
+        <div *ngIf="scheduleForm.controls['endTime']?.errors?.['invalidEndTime'] && scheduleForm.controls['endTime']?.touched" class="text-red-500 text-sm">
+          The end time must be after the start time.
+        </div>
+        <div *ngIf="scheduleForm.controls['endTime']?.invalid && scheduleForm.controls['endTime']?.touched && !scheduleForm.controls['endTime']?.errors?.['invalidEndTime']" class="text-red-500 text-sm">
+          End time is required.
+        </div>
+      </div>
+  
+      <!-- Video Call Link -->
+      <div class="mb-2 relative">
+        <label for="videoCallLink" class="block text-gray-100 text-sm mb-2">Video Call Link:</label>
+        <div class="flex">
+          <input type="text" formControlName="videoCallLink" id="videoCallLink" class="w-full rounded-full p-2 border" placeholder="Generated link will appear here" readonly>
+          <button type="button" (click)="generateLinkId()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full ml-2">
+            Generate  ID
+          </button>
+        </div>
+        <div *ngIf="scheduleForm.controls['videoCallLink']?.invalid && scheduleForm.controls['videoCallLink']?.touched" class="text-red-500 text-sm">
+          Video call link is required.
+        </div>
+      </div>
+  
+      <!-- Submit Button -->
+      <div>
+        <button type="submit" [disabled]="scheduleForm.invalid" class="py-2 px-4 w-full flex items-center bg-red-500 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white justify-center transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+  

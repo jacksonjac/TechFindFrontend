@@ -1,0 +1,16 @@
+<div class="text-center bg-gradient-to-r from-blue-800 to-indigo-900 shadow-red-4xl ring-blue-500 ring-opacity-50 border-b">
+  <h1 class="text-4xl font-bold mb-8">Welcome to Findtech</h1>
+  
+  <form class="max-w-md mx-auto mb-8 bg-gradient-to-r from-blue-800 to-indigo-900 shadow-red-4xl ring-blue-500 ring-opacity-50 border-b">
+    <label for="countries" class="block mb-4 text-lg font-medium text-gray-900 dark:text-white">Select Your Designation</label>
+    <select id="countries" class="placeholder bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            [(ngModel)]="selectedDesignation" (change)="onDesignationChange($event)">
+      <option value="" disabled [selected]="!selectedDesignation">Choose your Designation</option>
+      <option *ngFor="let designation of designations" [value]="designation._id">{{ designation.DesiName }}</option>
+    </select>
+  </form>
+
+  <button (click)="startQuiz()" type="button" class="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-lg px-6 py-3 text-center mb-2">
+    Start Quiz
+  </button>
+</div>

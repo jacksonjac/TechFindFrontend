@@ -1,0 +1,16 @@
+.table-container {
+    max-height: 400px; /* Set your desired max height */
+    overflow-y: auto;
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: transparent transparent; /* Firefox */
+  
+    &::-webkit-scrollbar {
+      width: 0px; /* Hide scrollbar for Webkit browsers (Chrome, Safari) */
+      background: transparent; /* Optional: to ensure no background color */
+    }
+  }
+  
+  .table-container:hover::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }

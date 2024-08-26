@@ -1,0 +1,206 @@
+
+<div class="flex flex-col min-h-screen">
+
+  
+  <nav class="bg-gradient-to-r from-slate-900 to-slate-700 shadow-red-4xl ring-blue-500 ring-opacity-50 border-b">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
+  <img src="https://www.shutterstock.com/image-vector/initial-letter-ft-logotype-company-260nw-725759989.jpg" class="h-11 rounded-xl w-11" alt="Flowbite Logo">
+  <span class="self-center text-2xl font-semibold whitespace-nowrap text-white font-variety dark:text-white">FindTech</span>
+</a>
+
+<div class="flex md:order-2 space-x-4 rtl:space-x-reverse">
+  <!-- Notification Button -->
+  <ng-container *ngIf="loggedIn(); ">
+  <div class="relative">
+    <svg (click)="showNotificationPage()"  class="w-8 h-8 text-gray-100 animate-wiggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21">
+      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M15.585 15.5H5.415A1.65 1.65 0 0 1 4 13a10.526 10.526 0 0 0 1.5-5.415V6.5a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v1.085c0 1.907.518 3.78 1.5 5.415a1.65 1.65 0 0 1-1.415 2.5zm1.915-11c-.267-.934-.6-1.6-1-2s-1.066-.733-2-1m-10.912 3c.209-.934.512-1.6.912-2s1.096-.733 2.088-1M13 17c-.667 1-1.5 1.5-2.5 1.5S8.667 18 8 17"/>
+    </svg>
+    <div class="px-1 bg-red-500 rounded-full text-center text-white text-sm absolute -top-3 -right-2">
+      
+      <div class="absolute top-0 left-0 rounded-full -z-10 animate-ping bg-teal-200 w-full h-full"></div>
+    </div>
+  </div>
+</ng-container>
+
+  <!-- Profile Dropdown -->
+  <ng-container *ngIf="loggedIn(); else notLoggedIn">
+    <div class="relative" (click)="toggleDropdown()">
+      <img id="avatarButton" class="w-10 h-10 rounded-full cursor-pointer" [src]="imageurl"  alt="User avatar">
+
+      <!-- Dropdown menu -->
+      <div class="relative">
+        <div *ngIf="dropdownOpen" class="absolute right-0 mt-2 w-44 bg-gradient-to-r from-slate-900 to-slate-700 divide-y rounded-lg shadow z-50">
+          <div class="px-4 py-3 text-gray-100 text-xl dark:text-white">
+            <div class="text-center text-red-100 ">{{ userName }}</div>
+            <div class="font-medium truncate">{{ userEmail }}</div>
+          </div>
+          <ul class="py-2 text-sm text-gray-100 hover:text-blue-700 dark:text-gray-100">
+            <li>
+              <a routerLink="/userProfile" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-gray-600">Profile</a>
+            </li>
+           
+            <li>
+              <a routerLink="/userBookings" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Booking</a>
+            </li>
+          </ul>
+          <div class="py-1">
+            <button (click)="logout()" class="block w-full text-left px-4 py-2 text-sm text-gray-100 hover:text-red-500">
+              Sign out
+            </button>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </ng-container>
+
+  <!-- Not Logged In State -->
+  <ng-template #notLoggedIn>
+    <button routerLink="/login" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
+    <button routerLink="/signup" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Signup</button>
+  </ng-template>
+
+  <!-- Mobile Menu Button -->
+ 
+  <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
+    <span class="sr-only">Open main menu</span>
+    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+    </svg>
+  </button>
+
+</div>
+<ng-container *ngIf="loggedIn(); ">
+      <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+        <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-20 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <li>
+            <a routerLink="/techlist" class="bg-gray-600 rounded-tl-full rounded-br-full text-white text-xs text-center self-center px-4 py-2 m-2">Home</a>
+          </li>
+          <li class="relative">
+            <a routerLink="/allchats" class="bloc py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 flex items-center">
+              <svg class="w-[35px] h-[35px] text-gray-100 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17h6l3 3v-3h2V9h-2M4 4h11v8H9l-3 3v-3H4V4Z"/>
+              </svg>
+            </a>
+          </li>
+          <li class="relative">
+            <a (click)="showInputmodal()" class="bloc py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 flex items-center">
+              <svg class="w-[34px] h-[34px] text-red-100 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 6H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1Zm7 11-6-2V9l6-2v10Z"/>
+              </svg>
+              
+              <!-- <span class="absolute -top-1 -right-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                
+              </span> -->
+            </a>
+          </li>
+          
+          
+        
+        </ul>
+      </div>
+    </ng-container>
+      
+    </div>
+  </nav>
+  
+  
+
+<div  class="P-2  flex-grow shadow-4xl  bg-gradient-to-r from-slate-900 to-slate-700 border-white">
+  <!-- <ngx-spinner></ngx-spinner> -->
+  
+  <router-outlet #routerOutlet="outlet"></router-outlet>
+  </div> 
+  <footer class="bg-gradient-to-r from-slate-900 to-slate-700 border shadow dark:bg-gray-900 ">
+    <div class="w-full max-w-screen-xl mx-auto  md:py-8">
+        <div class="sm:flex sm:items-center sm:justify-between">
+            <a href="https://flowbite.com/" class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
+              <img src="https://www.shutterstock.com/image-vector/initial-letter-ft-logotype-company-260nw-725759989.jpg" class="h-11 rounded-xl w-11" alt="Flowbite Logo">
+                <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">FindTech</span>
+            </a>
+            <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+                <li>
+                    <a href="#" class="hover:underline me-4 md:me-6">About</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline me-4 md:me-6">Licensing</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline">Contact</a>
+                </li>
+            </ul>
+        </div>
+        <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+        <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="https://flowbite.com/" class="hover:underline">FindTech™</a>. All Rights Reserved.</span>
+    </div>
+  </footer>
+
+</div>
+<!-- <div>
+  <nav class="p-4 bg-black fixed flex w-screen mt-0 items-center  z-50">
+    <span class="text-5xl text-red-500 font-bold font-serif flex items-center">
+      <svg class="w-[40px] h-[40px] text-black mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" viewBox="0 0 24 24" style="color: white;">
+        <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2ZM7.99 9a1 1 0 0 1 1-1H9a1 1 0 0 1 0 2h-.01a1 1 0 0 1-1-1ZM14 9a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2H15a1 1 0 0 1-1-1Zm-5.506 7.216A5.5 5.5 0 0 1 6.6 13h10.81a5.5 5.5 0 0 1-8.916 3.216Z" clip-rule="evenodd"/>
+      </svg>
+      FindTech
+    </span>
+  
+    <div class="flex flex-grow justify-center pl-1">
+      <button routerLink="" class="text-white ml-3 bg-gray  hover:bg-red-500 hover:scale-105 transform transition duration-700 ease-in-out flex items-center px-4 py-2 rounded">
+        <svg class="w-[29px] h-[29px] text-gray-800 dark:text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24" style="color: white;">
+          <path fill-rule="evenodd" d="M11.293 3.293a1 1 0 0 1 1.414 0l6 6 2 2a1 1 0 0 1-1.414 1.414L19 12.414V19a2 2 0 0 1-2 2h-3a1 1 0 0 1-1-1v-3h-2v3a1 1 0 0 1-1 1H7a2 2 0 0 1-2-2v-6.586l-.293.293a1 1 0 0 1-1.414-1.414l2-2 6-6Z" clip-rule="evenodd"/>
+        </svg>
+        Home
+      </button>
+  
+      <button routerLink="/services" class="text-white ml-3 bg-gray  hover:bg-red-500 hover:scale-105 transform transition duration-700 ease-in-out flex items-center px-4 py-2 rounded">
+        <svg class="w-[29px] h-[29px] text-gray-800 dark:text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24" style="color: white;">
+          <path fill-rule="evenodd" d="M9.586 2.586A2 2 0 0 1 11 2h2a2 2 0 0 1 2 2v.089l.473.196.063-.063a2.002 2.002 0 0 1 2.828 0l1.414 1.414a2 2 0 0 1 0 2.827l-.063.064.196.473H20a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-.089l-.196.473.063.063a2.002 2.002 0 0 1 0 2.828l-1.414 1.414a2 2 0 0 1-2.828 0l-.063-.063-.473.196V20a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-.089l-.473-.196-.063.063a2.002 2.002 0 0 1-2.828 0l-1.414-1.414a2 2 0 0 1 0-2.827l.063-.064L4.089 15H4a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h.09l.195-.473-.063-.063a2 2 0 0 1 0-2.828l1.414-1.414a2 2 0 0 1 2.827 0l.064.063L9 4.089V4a2 2 0 0 1 .586-1.414ZM8 12a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z" clip-rule="evenodd"/>
+        </svg>
+        Services
+      </button>
+  
+      <button routerLink="/about" class="text-white ml-3 bg-gray  hover:bg-red-500 hover:scale-105 transform transition duration-800 ease-in-out flex items-center px-4 py-2 rounded">
+        <svg class="w-[29px] h-[29px] text-gray-800 dark:text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24" style="color: white;">
+          <path fill-rule="evenodd" d="M12 6a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm-1.5 8a4 4 0 0 0-4 4 2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-3Zm6.82-3.096a5.51 5.51 0 0 0-2.797-6.293 3.5 3.5 0 1 1 2.796 6.292ZM19.5 18h.5a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-1.1a5.503 5.503 0 0 1-.471.762A5.998 5.998 0 0 1 19.5 18ZM4 7.5a3.5 3.5 0 0 1 5.477-2.889 5.5 5.5 0 0 0-2.796 6.293A3.501 3.501 0 0 1 4 7.5ZM7.1 12H6a4 4 0 0 0-4 4 2 2 0 0 0 2 2h.5a5.998 5.998 0 0 1 3.071-5.238A5.505 5.505 0 0 1 7.1 12Z" clip-rule="evenodd"/>
+        </svg>
+        About Us
+      </button>
+    </div>
+  
+    <div class="flex items-center pl-2">
+      <ng-container *ngIf="loggedIn(); else notLoggedIn">
+        <button (click)="logout()" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900 flex items-center">
+          <svg class="w-[33px] h-[33px] text-gray-800 dark:text-white inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24" style="color: white;">
+            <path fill-rule="evenodd" d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z" clip-rule="evenodd"/>
+          </svg>
+          Logout
+        </button>
+      </ng-container>
+  
+      <ng-template #notLoggedIn>
+        <button routerLink="/login" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900 flex items-center">
+          <svg class="w-[29px] h-[29px] text-gray-800 dark:text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24" style="color: white;">
+            <path fill-rule="evenodd" d="M8 10V7a4 4 0 1 1 8 0v3h1a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h1Zm2-3a2 2 0 1 1 4 0v3h-4V7Zm2 6a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0v-3a1 1 0 0 1 1-1Z" clip-rule="evenodd"/>
+          </svg>
+          Login
+        </button>
+  
+        <button routerLink="/signup" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
+          <svg class="w-[33px] h-[33px] text-gray-800 dark:text-white inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24" style="color: white;">
+            <path fill-rule="evenodd" d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z" clip-rule="evenodd"/>
+          </svg>
+          Sign UP
+        </button>
+      </ng-template>
+    </div>
+  </nav>
+</div>
+
+<div class="P-2 m-1  shadow-4xl">
+<router-outlet></router-outlet>
+</div> -->

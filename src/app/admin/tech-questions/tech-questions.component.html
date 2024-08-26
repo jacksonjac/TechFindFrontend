@@ -1,0 +1,69 @@
+<div class="flex-row justify-center">
+  <div>
+    <h1 class="flex items-center text-5xl font-extrabold dark:text-white">
+      <span class="bg-blue-100 text-blue-800 text-2xl font-semibold me-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-2">
+        Designations
+      </span>
+    </h1>
+  </div>
+
+  <div class="flex space-x-4">
+    <!-- Add New Button -->
+    <div class="flex-1">
+      <button (click)="OnModal()" type="button"
+        class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 w-full hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+        Add Question
+      </button>
+    </div>
+
+    <!-- Search Input -->
+    <div class="flex-1">
+      <select id="dropdown-menu" class="block w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:bg-white focus:border-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              [(ngModel)]="selectedDesignation" (change)="selectDesignation($event)">
+        <option value="all" [selected]="selectedDesignation === 'all'">All</option>
+        <option *ngFor="let designation of designations" [value]="designation._id">{{ designation.DesiName }}</option>
+      </select>
+    </div>
+  </div>
+
+  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <tr>
+        <th scope="col" class="px-6 py-3">Questions</th>
+        <th scope="col" class="px-6 py-3">Option 1</th>
+        <th scope="col" class="px-6 py-3">Option 2</th>
+        <th scope="col" class="px-6 py-3">Option 3</th>
+        <th scope="col" class="px-6 py-3">Correct Answer</th>
+        <th scope="col" class="px-6 py-3">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tech of Techlist | search:searchText | paginate: { itemsPerPage: 5, currentPage: p }" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+        <td class="px-6 py-4">
+          <div class="text-base font-semibold">{{ tech.question }}</div>
+        </td>
+        <td class="px-6 py-4">
+          <div>{{ tech.option1 }}</div>
+        </td>
+        <td class="px-6 py-4">
+          <div>{{ tech.option2 }}</div>
+        </td>
+        <td class="px-6 py-4">
+          <div>{{ tech.option3 }}</div>
+        </td>
+        <td class="px-6 py-4">
+          <div>{{ tech.correctAnswer }}</div>
+        </td>
+        <td class="px-6 py-4">
+          <div class="flex space-x-2">
+            <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline" (click)="EditQuestion(tech._id)">Edit</button>
+            <button class="font-medium text-red-600 dark:text-red-500 hover:underline" (click)="deleteQuestion(tech)">Delete</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="pagination-container">
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>

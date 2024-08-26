@@ -1,0 +1,80 @@
+<div class="flex h-[513px]">
+  <!-- Sidebar -->
+  <div class="w-1/4 bg-gradient-to-r border-b from-slate-900 border-r border-gray-300 h-full">
+    <div class="p-4">
+      <h2 class="text-lg text-gray-100 font-bold mb-4">All Chats</h2>
+      <ul>
+        <li *ngFor="let user of chatUsers" 
+            (click)="selectUser(user.technician._id)" 
+            class="p-2 mb-2 rounded-lg cursor-pointer hover:scale-105 flex items-start border transition-transform duration-200 ease-in-out"
+            [ngClass]="{'': selectedUser && selectedUser.id === user.id}">
+          <img [src]="user.technician?.image || 'https://cdn.vectorstock.com/i/500p/17/61/male-avatar-profile-picture-vector-10211761.jpg'" 
+               alt="User Image" 
+               class="inline-block h-12 w-12 rounded-full">
+          <div class="ml-3 flex flex-col justify-content">
+            <span class="font-medium text-gray-100 ">{{ user.technician?.name }}</span>           
+            <span class="text-sm text-gray-400 items-end">{{ user.lastMessage?.content }}  </span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Chat Container -->
+ 
+  <div  *ngIf="messagebox;  else showImage" class="flex flex-col w-3/4 h-full ">
+    <!-- User Info -->
+    <div class="flex items-center p-4 bg-gradient-to-r from-slate-900 border-b border-r border-gray-300">
+      <img [src]="technicianData?.image || 'https://marketplace.canva.com/EAFHfL_zPBk/1/0/1600w/canva-yellow-inspiration-modern-instagram-profile-picture-kpZhUIzCx_w.jpg'" alt="User Image" class="h-10 w-10 rounded-full">
+      
+      <span class="ml-2 text-lg text-gray-100 font-bold" *ngIf="technicianData">{{technicianData?.name}}<p class="text-sm text-gray-500">{{technicianData.designation?.DesiName}}</p></span>
+      
+      <!-- <div (click)="showInputmodal()" class="ml-auto">
+        <svg class="w-[34px] h-[34px] text-red-100 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 6H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1Zm7 11-6-2V9l6-2v10Z"/>
+        </svg>
+        
+      </div> -->
+    </div>
+    
+
+    <!-- Messages -->
+    <div #messagesContainer class="messages flex-grow overflow-y-auto mb-auto bg-gradient-to-r border-b from-slate-900 border-r">
+      <div *ngFor="let data of messages" 
+           [ngClass]="{ 'text-right': data.senderType === 'user', 'self-start text-left': data.senderType === 'technician' }"
+           class="m-2 p-2 rounded-lg">
+        <div class="border rounded">
+          <p class="text-gray-50 p-4">{{ data?.content }}</p>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-gray-500">{{ data.createdAt | date:'shortTime' }}</span>
+          <!-- Only show the "seen" indicator for the user's messages and if the message has been seen -->
+          <ng-container *ngIf="data.senderType === 'user' && data.seen" class="flex items-center justify-between">
+            <svg class="w-[15px] h-[15px] text-blue-500 dark:text-white ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5"/>
+            </svg>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- New Message -->
+      <div class="p-4 bg-gradient-to-r border-b from-slate-900 border-r">
+        <div class="flex">
+          <input [(ngModel)]="newMessage" placeholder="Type a message..." class="flex-grow p-2 border border-gray-300 rounded-l-lg focus:outline-none">
+          <button (click)="sendMessage()" class="p-2 bg-black text-white rounded-r-lg">Send</button>
+        </div>
+    </div>
+  </div>
+  <ng-template #showImage>
+    <div class="flex flex-col justify-center items-center w-3/4 h-full text-center">
+      <img src="https://i.pinimg.com/originals/69/df/62/69df621eac2bb71d5d75d36574aae64b.gif" alt="No Messages" class="h-56 w-56 rounded-full object-contain mb-4">
+      <p class="text-lg font-semibold text-gray-200">Choose a technician to start chatting</p>
+      <p class="text-sm text-gray-400 mt-2">Select a technician from the list to begin your conversation.</p>
+    </div>
+  </ng-template>
+  
+  
+</div>
+

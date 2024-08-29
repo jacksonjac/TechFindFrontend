@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 
 export class UserChatServicesService {
   private socket: Socket;
-  private baseUrl: string = "http://localhost:3000";
+  private baseUrl: string = "https://findtech.jacksonr.live";
 
   constructor(private http: HttpClient) {
     this.socket = io(this.baseUrl);

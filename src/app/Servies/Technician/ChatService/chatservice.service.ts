@@ -9,7 +9,7 @@ import { io, Socket } from 'socket.io-client';
 export class TechChatserviceService {
 
   private socket: Socket;
-  baseUrl = "https://findtech.jacksonr.live/";
+  baseUrl = 'https://findtech.jacksonr.live';
 
   constructor(private http: HttpClient) {
     this.socket = io(this.baseUrl);

@@ -14,9 +14,9 @@ import { CreateroomComponent } from '../modal/createRoom/createroom/createroom.c
 export class ChatPageComponent {
 
   @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
-  Userid = ''
+  Userid = '';
   technicianId: any;
-  messagebox:boolean=false
+  messagebox = false;
   
   chatUsers: any[] = [];
   selectedUser: any;
@@ -27,53 +27,50 @@ export class ChatPageComponent {
 
   private messageSubscription: Subscription | undefined;
 
-  constructor(private chatService: TechChatserviceService,
-    private route:ActivatedRoute,
+  constructor(
+    private chatService: TechChatserviceService,
+    private route: ActivatedRoute,
     private modal: MatDialog,
-    private auth:TechAuthService, private cdr: ChangeDetectorRef) {}
+    private auth: TechAuthService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    
-   this.technicianId = localStorage.getItem('techid');
+    this.technicianId = localStorage.getItem('techid');
     if (this.technicianId) {
       this.chatService.register(this.technicianId);
-
     }
+
     this.messageSubscription = this.chatService.receiveMessages().subscribe((message: any) => {
-        console.log("this is the data of technician get firsttime",message.senderId
-        )
-      this.Userid = message.SenderId
+      console.log("this is the data of technician get first time", message.senderId);
+      this.Userid = message.SenderId;
       this.messages.push(message);
-     
-      
+      this.scrollToBottom();
     });
 
-    this.messageSubscription = this.chatService.receiveSeenMessage().subscribe((message: any) => {
-      console.log("seen message sucessfully", message);
-      
-      this.messages.push(message);
-     
-    });
+    this.messageSubscription.add(
+      this.chatService.receiveSeenMessage().subscribe((message: any) => {
+        console.log("seen message successfully", message);
+        this.messages.push(message);
+        this.scrollToBottom();
+      })
+    );
 
-    this.getChatUsers(this.technicianId)
-   
+    this.getChatUsers(this.technicianId);
   }
 
   ngAfterViewInit(): void {
-    // Scroll to bottom initially after the view is initialized
-    // this.scrollToBottom();
+    this.scrollToBottom();
   }
 
   ngAfterViewChecked(): void {
-    // Ensure the scroll happens after each view check
-   
+    this.scrollToBottom();
   }
 
-  getChatUsers(techid:any) {
-    console.log(techid,"this is the technician id  for get thechatlist")
+  getChatUsers(techid: any) {
+    console.log(techid, "this is the technician id for getting the chat list");
     this.auth.getAllChatlistByid(techid).subscribe((response: any) => {
-      console.log(response, "this data from backend chatlist");
-      
+      console.log(response, "this data from backend chat list");
       if (response && response.data) {
         this.chatUsers = response.data;
       }
@@ -87,41 +84,37 @@ export class ChatPageComponent {
     this.getUserData(Userid);
     this.messagebox = true;
     
-    // Define the sender type as 'user'
     const senderType = 'user';
-  
-    // Call the method to mark messages as seen
+
     this.auth.markMessagesAsSeen(Userid, this.technicianId, senderType).subscribe(() => {
       this.messagebox = true;
       this.scrollToBottom();
-      this.emitseen(Userid,this.technicianId)
+      this.emitseen(Userid, this.technicianId);
     });
   }
 
-  emitseen(userid:string,techid:string){
-    const viewedBy = 'technician'
-   const data ={
+  emitseen(userid: string, techid: string) {
+    const viewedBy = 'technician';
+    const data = {
       userid,
       techid,
       viewedBy
-   }
+    };
+    this.chatService.seenEmit(data);
+  }
 
-  this.chatService.seenEmit(data)
-
- }
-  showInputmodal(){
+  showInputmodal() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.data = { email: this.UsernData.email };
-    localStorage.setItem('userEmailtovideocall',this.UsernData.email)
+    localStorage.setItem('userEmailtovideocall', this.UsernData.email);
     const dialogRef = this.modal.open(CreateroomComponent, dialogConfig);
-    
   }
+
   getChats(userid: any, techid: any) {
     console.log("this is the ids gonna pass ", userid, "--", techid);
     this.auth.getChatsbyIds(userid, techid).subscribe((response: any) => {
-      console.log("this is the response form getchats", response);
-
+      console.log("this is the response from get chats", response);
       if (response && response.data) {
         this.messages = response.data;
         console.log(this.messages, "this is the current message list of clicked tech");
@@ -132,13 +125,10 @@ export class ChatPageComponent {
   getUserData(Userid: any) {
     this.auth.getOneUserbyId(Userid).subscribe((response: any) => {
       if (response) {
-        console.log("Use data ", response);
+        console.log("User data ", response);
         this.UsernData = response.data.data;
       }
     });
-  }
-  ngOnChanges() {
-   
   }
 
   sendMessage(): void {
@@ -161,20 +151,23 @@ export class ChatPageComponent {
         response.SenderType = "technician"; // Ensure the SenderType is set correctly
         this.messages.push(response);
         this.cdr.detectChanges();
-        // this.scrollToBottom(); // Trigger change detection
+        this.scrollToBottom();
       });
 
       this.newMessage = '';
     }
   }
+
   private scrollToBottom(): void {
-    console.log("scroll is worked")
     try {
-      this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
+      if (this.messagesContainer) {
+        this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
+      }
     } catch (err) {
       console.error('Scroll to bottom failed', err);
     }
   }
+
   ngOnDestroy(): void {
     if (this.messageSubscription) {
       this.messageSubscription.unsubscribe();

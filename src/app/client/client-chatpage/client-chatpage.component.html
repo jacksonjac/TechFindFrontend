@@ -17,17 +17,22 @@
     
 
     <!-- Messages -->
-    <div #messagesContainer class="messages flex-grow overflow-y-auto mb-auto   bg-gradient-to-r border-b from-slate-900 border-r">
-      <div *ngFor="let data of messages" 
-           [ngClass]="{ '  text-right': data.senderType === 'user', ' self-start text-left': data.senderType === 'technician' }"
-           class="m-2 p-2  rounded-lg  ">
-           <div class="border  rounded">
-            <p class="  text-gray-50 p-4  ">{{ data?.content }}</p>
-
-           </div>
-        <span class="text-xs text-gray-500">{{ data.createdAt | date:'shortTime' }}</span>
+    <div #messagesContainer class="messages flex-grow overflow-y-auto mb-auto bg-gradient-to-r border-b from-slate-900 border-r">
+      <div *ngFor="let data of messages"
+           [ngClass]="{ 'text-right': data.senderType === 'user', 'text-left': data.senderType === 'technician' }"
+           class="m-2 p-2">
+        <!-- Message content container -->
+        <div [ngClass]="data.senderType === 'user' ? 'bg-blue-500 text-white self-end' : 'bg-green-500 text-white self-start'"
+             class="inline-block rounded-xl p-3">
+          <p class="text-gray-50">{{ data?.content }}</p>
+          <!-- Time display inside the message block -->
+          <span class="text-xs text-gray-200 mt-1 block">
+            {{ data.createdAt | date:'shortTime' }}
+          </span>
+        </div>
       </div>
     </div>
+    
 
     <!-- New Message -->
       <div class="p-4 bg-gradient-to-r border-b from-slate-900 border-r">

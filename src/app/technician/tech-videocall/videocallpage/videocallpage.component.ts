@@ -33,7 +33,7 @@ export class VideocallpageComponent {
   }
 
   initializeZegoCloud(roomId: string, UserName: string) {
-    const appId = 1758211850;
+    const appId = 1758211850
     const serverSecret = 'f0e7240978b927fd0012be43975a3fc0';
     const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
       appId, 

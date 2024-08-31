@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { UserChatServicesService } from 'src/app/Servies/Users/chatService/chat-servies.service';
@@ -12,7 +12,7 @@ import { Socket } from 'socket.io-client';
   templateUrl: './client-allchats.component.html',
   styleUrls: ['./client-allchats.component.scss']
 })
-export class ClientAllchatsComponent implements OnInit, AfterViewInit {
+export class ClientAllchatsComponent implements OnInit, AfterViewInit,OnDestroy {
   @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
   chatUsers: any[] = [];
   selectedUser: any;
@@ -33,28 +33,27 @@ export class ClientAllchatsComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    console.log("allchatlist ngonint")
+    console.log("allchatlist ngonint");
     this.Userid = localStorage.getItem('Userid');
     this.getChatUsers();
     this.scrollToBottom();
+
+    // Only one subscription for receiving messages
     this.messageSubscription = this.chatService.receiveMessages().subscribe((message: any) => {
-      console.log("Received message:", message);
-      
-      this.messages.push(message);
-      this.scrollToBottom();
+        console.log("Received message:", message);
+        this.messages.push(message);
+        this.scrollToBottom();
     });
-    this.messageSubscription = this.chatService.receiveSeenMessage().subscribe((message: any) => {
-      console.log("seen message sucessfully", message);
-      
-      this.messages.push(message);
-      this.scrollToBottom();
-    });
-    this.messageSubscription = this.chatService.receiveMessages().subscribe((message: any) => {
-      console.log("Received message:", message);
-      this.messages.push(message);
-      this.scrollToBottom();
-    });
-  }
+
+    // Subscription for the seen messages
+    this.messageSubscription.add(
+        this.chatService.receiveSeenMessage().subscribe((message: any) => {
+            console.log("seen message successfully", message);
+            this.messages.push(message);
+            this.scrollToBottom();
+        })
+    );
+}
 
   ngAfterViewInit(): void {
     // Scroll to bottom initially after the view is initialized
@@ -166,9 +165,8 @@ export class ClientAllchatsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    // Clean up subscriptions
     if (this.messageSubscription) {
-      this.messageSubscription.unsubscribe();
+        this.messageSubscription.unsubscribe();
     }
   }
 
@@ -180,4 +178,6 @@ export class ClientAllchatsComponent implements OnInit, AfterViewInit {
     
   
   }
+
+
 }

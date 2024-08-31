@@ -41,22 +41,27 @@
     <!-- Messages -->
     <div #messagesContainer class="messages flex-grow overflow-y-auto mb-auto bg-gradient-to-r border-b from-slate-900 border-r">
       <div *ngFor="let data of messages" 
-           [ngClass]="{ 'text-right': data.senderType === 'user', 'self-start text-left': data.senderType === 'technician' }"
-           class="m-2 p-2 rounded-lg">
-        <div class="border rounded">
-          <p class="text-gray-50 p-4">{{ data?.content }}</p>
-        </div>
-        <div class="flex items-center justify-between">
-          <span class="text-xs text-gray-500">{{ data.createdAt | date:'shortTime' }}</span>
+           [ngClass]="{ 'text-right': data.senderType === 'user', 'text-left': data.senderType === 'technician' }"
+           class="m-2 p-2">
+        <!-- Message content container -->
+        <div [ngClass]="data.senderType === 'user' ? 'bg-blue-500 text-white self-end' : 'bg-green-500 text-white self-start'" 
+             class="inline-block rounded-xl p-3">
+          <p class="text-white">{{ data?.content }}</p>
+          <!-- Time display inside the message block -->
+          <div [ngClass]="data.senderType === 'user' ? 'text-right' : 'text-left'" class="text-xs text-gray-200 mt-1">
+            {{ data.createdAt | date:'shortTime' }}
+          </div>
           <!-- Only show the "seen" indicator for the user's messages and if the message has been seen -->
-          <ng-container *ngIf="data.senderType === 'user' && data.seen" class="flex items-center justify-between">
+          <!-- <ng-container *ngIf="data.senderType === 'user' && data.seen">
             <svg class="w-[15px] h-[15px] text-blue-500 dark:text-white ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5"/>
             </svg>
-          </ng-container>
+          </ng-container> -->
         </div>
       </div>
     </div>
+    
+    
     
 
     <!-- New Message -->

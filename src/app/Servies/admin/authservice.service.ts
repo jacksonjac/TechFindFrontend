@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 export class AuthserviceService {
 
   constructor(private http:HttpClient,private router:Router) { }
- baseUrl = environment.baseUrl
+      baseUrl = environment.baseUrl
 
 
   loginAdmin(AdminData: any): Observable<any> {

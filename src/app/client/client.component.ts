@@ -103,6 +103,10 @@ export class ClientComponent implements OnInit {
         }
       );
     }
-  
+    mobileMenuOpen = false;
+
+    toggleMobileMenu() {
+      this.mobileMenuOpen = !this.mobileMenuOpen;
+    }
  
 }

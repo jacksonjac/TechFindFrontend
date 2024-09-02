@@ -12,7 +12,7 @@ export class TechnicianComponent {
   dropdownOpen = false;
   userName = 'Bonnie Green';
   
-  imageurl =''
+  imageurl ='https://static.vecteezy.com/system/resources/previews/005/129/844/non_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg'
 
   notificationcount:number=0
   constructor(private authService:TechAuthService, private modal: MatDialog,){}

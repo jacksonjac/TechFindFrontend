@@ -108,9 +108,9 @@ export class ClientTechProfileComponent implements OnInit {
     this.liked = !this.liked;
     this.likeCount += this.liked ? 1 : -1;
     console.log("like clicked");
-
+  
     const userName = localStorage.getItem('UserName');
-
+  
     if (this.technician._id && userName) {
       const likeNotification = {
         userid: this.userId,
@@ -118,10 +118,11 @@ export class ClientTechProfileComponent implements OnInit {
         content: `${userName} liked your profile.`,
         date: new Date()
       };
-
-      this.NofiService.sendLikeNotification(likeNotification).subscribe((responce)=> {
-        console.log('Notification response:', responce);
-        if (responce.status) {
+  
+      // Use Socket.IO for sending notification
+      this.NofiService.sendNotification(likeNotification, (response: any) => {
+        console.log('Notification response:', response);
+        if (response.status) {
           this.toaster.showSuccess("Liked Successfully", "");
           this.fetchTechnicianDetails(this.technician._id); // Refresh technician data
         } else {

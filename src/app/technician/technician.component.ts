@@ -27,7 +27,7 @@ export class TechnicianComponent {
     this.notifyService.receiveNotifications().subscribe((responce) => {
       
       this.notificationcount++;
-
+     this.toaster.showSuccess('You have a Notification',"")
     
     });
 

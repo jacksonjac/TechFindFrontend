@@ -89,7 +89,7 @@ export class TechnicianHomepageComponent {
   }
   getDashboardData() {
     this.auth.getTechnicianDashboardData(this.technicianId).subscribe(data => {
-        console.log(data.data.data.averageRating
+        console.log(data
           , "backend to frontend, getDashboardData");
 
         // Assigning values from the backend data object to component properties
@@ -97,16 +97,46 @@ export class TechnicianHomepageComponent {
         this.averageRating = data.data.data.averageRating;
         this.helpedCustomers = data.data.data.helpedCustomers;
         this.totalEarnings = data.data.data.totalEarnings;
+        const userFlow = data.data;
 
+        console.log(userFlow,"daily earning dataflow")
+
+        this.dataCombo = {
+          labels: userFlow.labels,
+          datasets: [
+            {
+              type: 'line',
+              label: 'Helped Customers',
+              borderColor: '#42A5F5',
+              borderWidth: 1,
+              fill: false,
+              data: [50, 25, 12, 48, 56, 76, 42]
+            },
+            {
+              type: 'bar',
+              label: 'Earnings Amount',
+              backgroundColor: '#66BB6A',
+              data: userFlow.dailyEarningsData,
+              borderColor: 'white',
+              borderWidth: 2
+            },
+            {
+              type: 'bar',
+              label: 'Pending Slots',
+              backgroundColor: '#FFA726',
+              data: userFlow.pendingSlotsData
+            }
+          ]
+        };
         // Setting up data for the Pie chart
         this.dataPie = {
             labels: ['Pending Slots', 'Booked Slots', 'Expired Slots'],
             datasets: [
                 {
                     data: [
-                        data.pendingSlots || 300,  // Fallback to 300 if data.pendingSlots is undefined
-                        data.bookedSlots || 50,   // Fallback to 50 if data.bookedSlots is undefined
-                        data.expiredSlots || 20   // Fallback to 20 if data.expiredSlots is undefined
+                        data.data.data.pendingSlots||1 ,// Fallback to 300 if data.pendingSlots is undefined
+                        data.data.data.bookedSlots , // Fallback to 50 if data.bookedSlots is undefined
+                        data.data.data.expiredSlots // Fallback to 20 if data.expiredSlots is undefined
                     ],
                     backgroundColor: ["#FF6F6F", "#66BB6A", "#FFA726"],  // Red, Green, Orange
             hoverBackgroundColor: ["#FF8C8C", "#81C784", "#FFB74D"]  // Lighter shades for hover

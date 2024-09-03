@@ -2,16 +2,19 @@
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    color: white;
 }
 
 .pagination-container .ngx-pagination {
     display: flex;
     list-style: none;
     padding: 0;
+    color: white;
 }
 
 .pagination-container .ngx-pagination li {
     margin: 0 5px;
+    color: white;
 }
 
 .pagination-container .ngx-pagination .current {
@@ -24,6 +27,7 @@
 .pagination-container .ngx-pagination .disabled {
     color: #ccc;
     pointer-events: none;
+    color: white;
 }
 
 .pagination-container .ngx-pagination a {

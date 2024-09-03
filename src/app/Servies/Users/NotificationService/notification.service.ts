@@ -11,25 +11,28 @@ export class NotificationService {
   private baseUrl: string = "https://findtech.jacksonr.live";
 
   constructor(private http: HttpClient) {
+
+    console.log("Notification service automatically passing ..")
     this.socket = io(this.baseUrl);
     const userid = localStorage.getItem("Userid");
     if (userid) {
       this.register(userid);
-      this.registerForNotifications(userid);
+     
     }
   }
 
   register(userid: string): void {
-    console.log("user service passsing")
-    this.socket.emit('register', userid);
+    console.log("Notification service passsing")
+    this.socket.emit('NotificationRegister', userid);
   }
-  registerForNotifications(userid: string): void {
-    console.log("User service passing notification registration");
-    this.socket.emit('registerNotification', userid);
-  }
+
+
+  
 
 
   sendNotification(message: any, callback: (response: any) => void): void {
-    this.socket.emit('notification', message, callback);
+
+       console.log("sendnofication to backend this data",message)
+    this.socket.emit('sendNotification', message, callback);
   }
 }

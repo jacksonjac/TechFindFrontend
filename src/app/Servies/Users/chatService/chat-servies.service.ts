@@ -15,11 +15,13 @@ export class UserChatServicesService {
   private baseUrl: string = "https://findtech.jacksonr.live";
 
   constructor(private http: HttpClient) {
+
+    console.log("chat service automatically passing ")
     this.socket = io(this.baseUrl);
     const userid = localStorage.getItem("Userid");
     if (userid) {
       this.register(userid);
-      this.registerForNotifications(userid);
+     
     }
   }
 
@@ -27,10 +29,7 @@ export class UserChatServicesService {
     console.log("user service passsing")
     this.socket.emit('register', userid);
   }
-  registerForNotifications(userid: string): void {
-    console.log("User service passing notification registration");
-    this.socket.emit('registerNotification', userid);
-  }
+
 
   // Method to get chat history
   getChatHistory(technicianId: string): Observable<any> {

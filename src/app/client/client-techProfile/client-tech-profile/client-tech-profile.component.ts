@@ -112,26 +112,29 @@ export class ClientTechProfileComponent implements OnInit {
     const userName = localStorage.getItem('UserName');
   
     if (this.technician._id && userName) {
-      const likeNotification = {
-        userid: this.userId,
-        technicianId: this.technician._id,
-        content: `${userName} liked your profile.`,
-        date: new Date()
-      };
+      if (this.liked) {  // Emit notification only when liked
+        const likeNotification = {
+          senderid: this.userId,
+          receiverId: this.technician._id,
+          content: `${userName} liked your profile.`,
+          date: new Date()
+        };
   
-      // Use Socket.IO for sending notification
-      this.NofiService.sendNotification(likeNotification, (response: any) => {
-        console.log('Notification response:', response);
-        if (response.status) {
-          this.toaster.showSuccess("Liked Successfully", "");
-          this.fetchTechnicianDetails(this.technician._id); // Refresh technician data
-        } else {
-          this.toaster.showError("Already Liked", "alredyliked");
-          this.liked = !this.liked; // Revert like state
-          this.likeCount += this.liked ? 1 : -1; // Revert like count
-        }
-        this.cdr.detectChanges(); // Refresh the view
-      });
+        // Use Socket.IO for sending notification
+        this.NofiService.sendNotification(likeNotification, (response: any) => {
+          console.log('Notification response:', response);
+          if (response.status) {
+            this.toaster.showSuccess("Liked Successfully", "");
+            this.fetchTechnicianDetails(this.technician._id); 
+           
+          } else {
+            this.toaster.showError("Already Liked", "Already liked");
+            this.liked = !this.liked; // Revert like state
+            this.likeCount += this.liked ? 1 : -1; // Revert like count
+          }
+          this.cdr.detectChanges(); // Refresh the view
+        });
+      }
     }
   }
   getComments(techid: any) {

@@ -97,7 +97,7 @@ export class TechnicianHomepageComponent {
         this.averageRating = data.data.data.averageRating;
         this.helpedCustomers = data.data.data.helpedCustomers;
         this.totalEarnings = data.data.data.totalEarnings;
-        const userFlow = data.data;
+        const userFlow = data.data.data.userFlow;
 
         console.log(userFlow,"daily earning dataflow")
 

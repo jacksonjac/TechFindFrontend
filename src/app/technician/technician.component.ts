@@ -3,6 +3,8 @@ import { TechAuthService } from '../Servies/Technician/tech-auth.service';
  import { fadeAnimation } from '../Servies/animations/animation.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TechNotificationsComponent } from './modal/tech-notificationpage/tech-notifications/tech-notifications.component';
+import { NotificationService } from '../Servies/Users/NotificationService/notification.service';
+import { ToastService } from '../Servies/Toster/toast-service.service';
 @Component({
   selector: 'app-technician',
   templateUrl: './technician.component.html',
@@ -11,16 +13,30 @@ import { TechNotificationsComponent } from './modal/tech-notificationpage/tech-n
 export class TechnicianComponent {
   dropdownOpen = false;
   userName = 'Bonnie Green';
-  
+  notificationcount: number = 0;
   imageurl ='https://static.vecteezy.com/system/resources/previews/005/129/844/non_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg'
 
-  notificationcount:number=0
-  constructor(private authService:TechAuthService, private modal: MatDialog,){}
-ngOnInit(): void {
- 
+  
+  constructor(private authService:TechAuthService, private modal: MatDialog,private notifyService:NotificationService,private toaster:ToastService){}
+  ngOnInit(): void {
+  const techId = localStorage.getItem("techid");
+  if(techId){
     
-}
+    this.notifyService.register(techId)
+  }
+    this.notifyService.receiveNotifications().subscribe((responce) => {
+      
+      this.notificationcount++;
 
+    
+    });
+
+    const TechId = localStorage.getItem('techid');
+    if (TechId) {
+      this.getTechData(TechId);
+    }
+ 
+  }
  
 
   loggedIn(): boolean {

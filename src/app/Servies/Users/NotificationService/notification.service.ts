@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
 import { environment } from 'src/environments/environment';
 @Injectable({
@@ -35,4 +36,13 @@ export class NotificationService {
        console.log("sendnofication to backend this data",message)
     this.socket.emit('sendNotification', message, callback);
   }
+  receiveNotifications(): Observable<any> { // Renamed to be more descriptive
+    return new Observable((observer) => {
+      this.socket.on('newNotification', (notification) => { // Corrected the event name to match the backend
+        console.log("Received notification:", notification);
+        observer.next(notification);
+      });
+    });
+  }
+
 }

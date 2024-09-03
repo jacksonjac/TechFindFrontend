@@ -40,6 +40,11 @@ export class ClientComponent implements OnInit {
    if(UserId){
     this.Userid = UserId
    }
+
+   
+   if (UserId) {
+     this.getUserData(UserId);
+   }
   
     // Simulate data loading
     setTimeout(() => {

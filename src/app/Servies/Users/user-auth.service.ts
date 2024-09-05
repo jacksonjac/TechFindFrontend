@@ -95,19 +95,11 @@ getAllChatlistByid(UserId:any){
 markMessagesAsSeen(userId: string, techId: string, senderType: string): Observable<any> {
   return this.http.get(`${this.baseUrl}common/getChatsSeenUpdate?userid=${userId}&techid=${techId}&senderType=${senderType}`);
 }
-  logoutUser(): void {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('Userid');
-    localStorage.removeItem('email'); 
-    localStorage.removeItem('tech-data')
-    localStorage.removeItem('slot-data')
-    localStorage.removeItem('email')
-    localStorage.removeItem('UserName')  
-    
-
-    
-    this.router.navigate(['']);
-  }
+logoutUser(): void {
+  localStorage.clear(); // Clears all items from localStorage
+  
+  this.router.navigate(['']);
+}
   
   uploadImage(fileName:any,techid:any){
     console.log("upload file passing funtion")

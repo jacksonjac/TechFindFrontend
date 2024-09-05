@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { config, Subscription } from 'rxjs';
  import {  ChartServiceService , AppConfig } from '../../Servies/Technician/chart-service.service';
 import { TechAuthService } from 'src/app/Servies/Technician/tech-auth.service';
 

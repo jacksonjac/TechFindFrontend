@@ -76,13 +76,14 @@ export class AdminManageDesiComponent {
   }
 
   saveDesignation(designation: any) {
-    console.log("form saveDesignation", designation, designation._id)
-    this.auth.updateDesignation(designation._id, designation).subscribe(
+    // Call the service to update the designation
+    this.auth.updateDesignation(designation._id, { DesiName: designation.DesiName }).subscribe(
       (response: any) => {
         if (response.status) {
           console.log('Designation updated successfully');
           this.toastService.showSuccess('Success', 'Designation updated successfully');
-          this.fetchDesignations();
+          designation.editable = false; // Exit edit mode after saving
+          this.fetchDesignations(); // Optionally refresh the list
         } else {
           console.error('Error updating designation:', response.message);
           this.toastService.showError('Error', 'Failed to update designation');
@@ -95,10 +96,11 @@ export class AdminManageDesiComponent {
         this.cdr.detectChanges();
       }
     );
-    designation.editable = false;
   }
 
   deleteDesignation(designationId: string) {
+
+    console.log(designationId,"sdfjsdkf")
     this.auth.deleteDesignation(designationId).subscribe(
       (response: any) => {
         if (response.status) {
@@ -118,4 +120,13 @@ export class AdminManageDesiComponent {
       }
     );
   }
+
+  onDesignationAdded(){
+    this.fetchDesignations();
+  }
+
+  editDesignation(desiId:any){
+
+  }
+ 
 }

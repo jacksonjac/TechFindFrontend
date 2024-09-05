@@ -28,9 +28,20 @@ export class AddDesignationComponent {
       this.auth.NewDesignation(designationData)
         .subscribe(
           (response) => {
-            this.Toast.showSuccess("Successfully Added", "Designation Added Successfully");
-            this.designationAdded.emit();  // Emit event to notify parent
-            this.router.navigate(["admin/Designationlist"]);
+
+            console.log("responce of the newdes",response)
+            if(response.status){
+              this.Toast.showSuccess("Succefully",response.message)
+
+              this.designationAdded.emit();  // Emit event to notify parent
+              this.router.navigate(["admin/Designationlist"]);
+            }else{
+              this.Toast.showError("Failed",response.message)
+              this.router.navigate(["admin/Designationlist"]);
+            }
+
+
+           
           },
           (error) => {
             console.error('Error adding new designation:', error);

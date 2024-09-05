@@ -50,6 +50,7 @@ export class AuthserviceService {
     return this.http.put(`${this.baseUrl}admin/DeniedTech?id=${TechId}`, {});
   }
   deleteDesignation(id:any){
+    console.log("delelet ddesignation passing ",id)
    
     return this.http.put(`${this.baseUrl}admin/DeleteDesignation?id=${id}`, {});
 
@@ -60,6 +61,8 @@ export class AuthserviceService {
   }
 
   NewDesignation(designation: any): Observable<any> {
+
+    console.log("newdesignation passing ",designation)
     
     return this.http.post<any>(`${this.baseUrl}admin/AddDesignation`, designation);
   }
@@ -103,9 +106,9 @@ export class AuthserviceService {
     console.log("passing get designation.")
     return this.http.get<any>(`${this.baseUrl}common/AllDesignation`)
   }
-  updateDesignation(DesiId:any,Data:any){
-    return this.http.put<any>(`${this.baseUrl}admin/UpdateDesignation?id=${DesiId}`, {Data});
-  }
+  updateDesignation(DesiId: any, Data: any) {
+    return this.http.put<any>(`${this.baseUrl}admin/UpdateDesignation?id=${DesiId}`, { Data });
+  }  
   logoutUser(): void {
     localStorage.removeItem('admintoken');  
     this.router.navigate(['admin']);

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { callback } from 'chart.js/dist/helpers/helpers.core';
+
 import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'

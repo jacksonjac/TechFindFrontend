@@ -32,8 +32,8 @@ export class ClientVideocallroomComponent implements OnInit{
   }
 
   initializeZegoCloud(roomId: string, Username: string) {
-    const appId = 1758211850;
-    const serverSecret = 'f0e7240978b927fd0012be43975a3fc0';
+    const appId = 592111496;
+    const serverSecret = '72b580c42d885d5999b3c380e84556eb';
     const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
       appId, 
       serverSecret, 

@@ -36,7 +36,7 @@ const routes: Routes = [{
     { path: 'userProfile', component: ClientprofilepageComponent, canActivate: [authguardGuard], data: { animation: 'UserProfilePage' } },
     { path: 'chatpage/:id', component: ClientChatpageComponent, canActivate: [authguardGuard], data: { animation: 'ChatPage' } },
     { path: 'allchats', component: ClientAllchatsComponent, canActivate: [authguardGuard], data: { animation: 'AllChatsPage' } },
-    { path: 'room/:id', component: ClientVideocallroomComponent },
+    { path: 'room/:id', component: ClientVideocallroomComponent,canActivate: [authguardGuard] },
   ]
 }];
 

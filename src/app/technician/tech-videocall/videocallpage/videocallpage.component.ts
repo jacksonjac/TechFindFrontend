@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 import { TechAuthService } from 'src/app/Servies/Technician/tech-auth.service';
 @Component({
@@ -15,54 +15,69 @@ export class VideocallpageComponent {
   roomId: string | undefined;
   userId = localStorage.getItem('Userid') || 'guest';
   techName = localStorage.getItem('techName') || '';
-  
-  constructor(private route: ActivatedRoute, private http: HttpClient,private auth:TechAuthService) {}
+
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private auth: TechAuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.roomId = params['id'];
       
-      const UserName = this.techName;
-    
-      if (this.roomId && UserName) {
-        this.initializeZegoCloud(this.roomId, UserName);
+      if (this.roomId && this.techName) {
+        this.initializeZegoCloud(this.roomId, this.techName);
       } else {
-        console.error('Room ID is undefined');
+        console.error('Room ID or UserName is undefined');
+        // Handle error, e.g., redirect to a different page or show a message
+        this.router.navigate(['/error']);  // Redirect to an error page
       }
     });
   }
 
   initializeZegoCloud(roomId: string, UserName: string) {
-    const appId = 1758211850
-    const serverSecret = 'f0e7240978b927fd0012be43975a3fc0';
+    const appId = 592111496
+    const serverSecret =  '72b580c42d885d5999b3c380e84556eb'; // This should be moved to backend
+  
+    // Generate kit token from backend
     const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
       appId, 
       serverSecret, 
       roomId, 
-      Date.now().toString(),
+      this.userId,  // Use consistent user ID
       UserName
     );
-
+  
     const zc = ZegoUIKitPrebuilt.create(kitToken);
-    zc.joinRoom({
-      container: this.zegoContainer.nativeElement,
-      scenario: {
-        mode: ZegoUIKitPrebuilt.OneONoneCall,
-      },
-      showScreenSharingButton: false,
-      showRoomTimer: true,
-    });
+  
+    try {
+      zc.joinRoom({
+        container: this.zegoContainer.nativeElement,
+        scenario: {
+          mode: ZegoUIKitPrebuilt.OneONoneCall,
+        },
+        showScreenSharingButton: false,
+        showRoomTimer: true,
+      });
+    } catch (error) {
+      console.error('Failed to join room:', error);
+      // Handle SDK initialization error, e.g., show a message to the user
+    }
   }
 
   sendEmail() {
-    const email = localStorage.getItem('userEmailtovideocall')
+    const email = localStorage.getItem('userEmailtovideocall');
     if (this.roomId && email) {
       this.auth.sendRoomIdToEmail(this.roomId, email).subscribe(response => {
         console.log('Email sent successfully');
       }, error => {
         console.error('Error sending email:', error);
+        // Additional error handling can be done here
       });
+    } else {
+      console.error('Email or Room ID is missing');
     }
   }
-
 }

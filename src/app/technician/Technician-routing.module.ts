@@ -31,9 +31,9 @@ const routes: Routes = [
       {path:'slot-page',component:TechAddslotComponent,canActivate:[authguardGuard]},
       {path:'tech-Profile',component:TechProfileComponent,canActivate:[authguardGuard]},
       {path:"chatpage",component:ChatPageComponent,canActivate:[authguardGuard]},
-      { path: 'room/:id', component: VideocallpageComponent },
-      { path: 'schedule-meeting', component: MeetingscheduleComponent },
-      { path: 'meeting-list', component: MeetingListsComponent },
+      { path: 'room/:id', component: VideocallpageComponent,canActivate:[authguardGuard] },
+      { path: 'schedule-meeting', component: MeetingscheduleComponent ,canActivate:[authguardGuard]},
+      { path: 'meeting-list', component: MeetingListsComponent,canActivate:[authguardGuard] },
       
     ]
   }

@@ -21,15 +21,28 @@ export class TechnicianHomepageComponent {
   averageRating: number = 0;
   helpedCustomers: number = 0;
   totalEarnings: number = 0;
-  constructor(private configService: ChartServiceService,private auth:TechAuthService) {}
+
+  constructor(private configService: ChartServiceService, private auth: TechAuthService) {}
 
   ngOnInit() {
-    const techid = localStorage.getItem("techid")
-     if(techid){
-      this.technicianId= techid
-     }
-     this.getDashboardData()
+    const techid = localStorage.getItem("techid");
+    if (techid) {
+      this.technicianId = techid;
+    }
+    this.getDashboardData();
 
+    // Set initial data to prevent errors before data loading
+    this.initializeCharts();
+
+    this.config = this.configService.config;
+    this.updateChartOptions();
+    this.subscription = this.configService.configUpdate$.subscribe(config => {
+      this.config = config;
+      this.updateChartOptions();
+    });
+  }
+
+  initializeCharts() {
     this.dataCombo = {
       labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
       datasets: [
@@ -54,12 +67,6 @@ export class TechnicianHomepageComponent {
           label: 'Dataset 3',
           backgroundColor: '#FFA726',
           data: [41, 52, 24, 74, 23, 21, 32]
-        },
-        {
-          type: 'bar',
-          label: 'Dataset 3',
-          backgroundColor: '#FFA729',
-          data: [41, 52, 24, 74, 23, 21, 32]
         }
       ]
     };
@@ -74,12 +81,65 @@ export class TechnicianHomepageComponent {
         }
       ]
     };
+  }
 
-    this.config = this.configService.config;
-    this.updateChartOptions();
-    this.subscription = this.configService.configUpdate$.subscribe(config => {
-      this.config = config;
-      this.updateChartOptions();
+  getDashboardData() {
+    this.auth.getTechnicianDashboardData(this.technicianId).subscribe(data => {
+      console.log(data, "backend to frontend, getDashboardData");
+
+      // Assigning values from the backend data object to component properties
+      this.totalLikes = data.data.data.totalLikes;
+      this.averageRating = data.data.data.averageRating;
+      this.helpedCustomers = data.data.data.helpedCustomers;
+      this.totalEarnings = data.data.data.totalEarnings;
+      const userFlow = data.data.data.userFlow;
+
+      console.log(userFlow, "daily earning dataflow");
+
+      // Set up combo chart data dynamically based on the backend response
+      this.dataCombo = {
+        labels: userFlow.labels,
+        datasets: [
+          {
+            type: 'line',
+            label: 'Helped Customers',
+            borderColor: '#42A5F5',
+            borderWidth: 1,
+            fill: false,
+            data: userFlow.helpedCustomersData || [0, 0, 0, 0, 0, 0, 0] // Fallback if data is not present
+          },
+          {
+            type: 'bar',
+            label: 'Earnings Amount',
+            backgroundColor: '#66BB6A',
+            data: userFlow.dailyEarningsData || [0, 0, 0, 0, 0, 0, 0], // Fallback if data is not present
+            borderColor: 'white',
+            borderWidth: 2
+          },
+          {
+            type: 'bar',
+            label: 'Pending Slots',
+            backgroundColor: '#FFA726',
+            data: userFlow.pendingSlotsData || [0, 0, 0, 0, 0, 0, 0] // Fallback if data is not present
+          }
+        ]
+      };
+
+      // Set up pie chart data dynamically based on the backend response
+      this.dataPie = {
+        labels: ['Pending Slots', 'Booked Slots', 'Expired Slots'],
+        datasets: [
+          {
+            data: [
+              data.data.data.pendingSlots || 1, // Fallback to 1 if data.pendingSlots is undefined
+              data.data.data.bookedSlots || 0, // Fallback to 0 if data.bookedSlots is undefined
+              data.data.data.expiredSlots || 0  // Fallback to 0 if data.expiredSlots is undefined
+            ],
+            backgroundColor: ["#FF6F6F", "#66BB6A", "#FFA726"],  // Red, Green, Orange
+            hoverBackgroundColor: ["#FF8C8C", "#81C784", "#FFB74D"]  // Lighter shades for hover
+          }
+        ]
+      };
     });
   }
 
@@ -87,64 +147,6 @@ export class TechnicianHomepageComponent {
     this.chartOptionsCombo = this.config && this.config.dark ? this.getDarkTheme() : this.getLightTheme();
     this.chartOptionsPie = this.chartOptionsCombo;
   }
-  getDashboardData() {
-    this.auth.getTechnicianDashboardData(this.technicianId).subscribe(data => {
-        console.log(data
-          , "backend to frontend, getDashboardData");
-
-        // Assigning values from the backend data object to component properties
-        this.totalLikes = data.data.data.totalLikes;
-        this.averageRating = data.data.data.averageRating;
-        this.helpedCustomers = data.data.data.helpedCustomers;
-        this.totalEarnings = data.data.data.totalEarnings;
-        const userFlow = data.data.data.userFlow;
-
-        console.log(userFlow,"daily earning dataflow")
-
-        this.dataCombo = {
-          labels: userFlow.labels,
-          datasets: [
-            {
-              type: 'line',
-              label: 'Helped Customers',
-              borderColor: '#42A5F5',
-              borderWidth: 1,
-              fill: false,
-              data: [50, 25, 12, 48, 56, 76, 42]
-            },
-            {
-              type: 'bar',
-              label: 'Earnings Amount',
-              backgroundColor: '#66BB6A',
-              data: userFlow.dailyEarningsData,
-              borderColor: 'white',
-              borderWidth: 2
-            },
-            {
-              type: 'bar',
-              label: 'Pending Slots',
-              backgroundColor: '#FFA726',
-              data: userFlow.pendingSlotsData
-            }
-          ]
-        };
-        // Setting up data for the Pie chart
-        this.dataPie = {
-            labels: ['Pending Slots', 'Booked Slots', 'Expired Slots'],
-            datasets: [
-                {
-                    data: [
-                        data.data.data.pendingSlots||1 ,// Fallback to 300 if data.pendingSlots is undefined
-                        data.data.data.bookedSlots , // Fallback to 50 if data.bookedSlots is undefined
-                        data.data.data.expiredSlots // Fallback to 20 if data.expiredSlots is undefined
-                    ],
-                    backgroundColor: ["#FF6F6F", "#66BB6A", "#FFA726"],  // Red, Green, Orange
-            hoverBackgroundColor: ["#FF8C8C", "#81C784", "#FFB74D"]  // Lighter shades for hover
-                }
-            ]
-        };
-    });
-}
 
   getLightTheme() {
     return {

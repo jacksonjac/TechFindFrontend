@@ -2,7 +2,7 @@ declare var google: any;
 import { Component, OnInit, NgZone } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserInterface } from 'src/app/Interface/Users/user-interface';
+import { UserData,LoginResponse,UserInterface } from 'src/app/Interface/Users/user-interface';
 import { ToastService } from 'src/app/Servies/Toster/toast-service.service';
 import { UserAuthService } from 'src/app/Servies/Users/user-auth.service';
 import { RegisterResponse } from 'src/app/Interface/Users/RegisterResponse';
@@ -74,15 +74,15 @@ export class ClientLoginComponent implements OnInit {
            };   
 
            console.log(UserData,"datafrom font end")
-        this.auth.GoogleregisterUser(UserData)
-          .subscribe((response: any) => {
+        this.auth.GoogleregisterUser(UserData as UserInterface)
+          .subscribe((response:LoginResponse) => {
             console.log("google login respons login page",response)
             if (response && response.status) {
 
-              localStorage.setItem("token",response.token)
+              localStorage.setItem("token",response.AcessToken)
               localStorage.setItem('Userid', response.data._id);
               localStorage.setItem('email', response.data.email);
-              localStorage.setItem('imageUrl',response.image)
+             
               this.toastService.showSuccess('Registration Successful', 'FindTech Welcomes you');
               this.router.navigate(['techlist']);
             } else {
@@ -111,8 +111,10 @@ export class ClientLoginComponent implements OnInit {
       };
       console.log()
 
-      this.auth.loginUser(UserData as UserInterface)
+      this.auth.loginUser(UserData as UserData)
         .subscribe((response: any) => {
+
+          console.log("responce of login user",response)
           if (response && response.status) {
             this.LoggedUser = response.data.name
             this.LoggedEmail = response.data.email

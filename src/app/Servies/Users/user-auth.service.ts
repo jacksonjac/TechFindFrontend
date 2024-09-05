@@ -20,7 +20,7 @@ export class UserAuthService {
     return this.http.post<any>(`${this.baseUrl}user/newUser`, UserData);
   }
   loginUser(userData: UserInterface): Observable<LoginResponse> {
-    console.log('passing userlogin data', userData);
+    console.log('Passing user login data', userData);
     return this.http.post<LoginResponse>(`${this.baseUrl}user/newLogin`, userData, {
       withCredentials: true // Ensure cookies are included in the request
     });

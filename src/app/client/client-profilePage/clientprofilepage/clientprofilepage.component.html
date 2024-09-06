@@ -1,6 +1,4 @@
 <div class="w-full rounded-sm bg-cover bg-center bg-no-repeat items-center">
- 
-  
   <div class="flex justify-center mb-2 p-4 bg-cover bg-center" style="background-image: url('https://e0.pxfuel.com/wallpapers/199/906/desktop-wallpaper-best-funny-facebook-cover-timeline.jpg');">
     <img
       [src]="UserData.data.image"  
@@ -24,62 +22,69 @@
   </form>
 </div>
 
-
-<section class="">
-  <div class=" mx-auto">
-    <div class="bg-gray-800 dark:bg-gray-800 shadow-lg rounded-lg p-1 ">
+<section>
+  <div class="mx-auto">
+    <div class="bg-gray-800 dark:bg-gray-800 shadow-lg rounded-lg p-1">
       <h2 class="text-1xl font-bold text-gray-100 dark:text-gray-300 mb-2">Edit Profile</h2>
       
       <form (ngSubmit)="updateUserProfile()" class="space-y-4">
         <div class="flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
           <div class="w-full">
-            <input type="text"
+            <input
+              type="text"
               [(ngModel)]="UserData.data.name"
               name="firstName"
               id="firstName"
               class="block w-full p-3 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700"
-              placeholder="Enter your first name">
+              placeholder="Enter your first name"
+            />
           </div>
       
           <div class="w-full">
-            <input type="text"
-              [(ngModel)]="UserData.lastName"
-              name="lastName"
-              id="lastName"
+            <input
+              type="text"
+              [(ngModel)]="UserData.data.district"
+              name="district"
+              id="district"
               class="block w-full p-3 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700"
-              placeholder="Enter your last name">
+              placeholder="Enter your district"
+            />
           </div>
         </div>
       
         <div class="flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
           <div class="w-full">
-            <input type="text"
-              [(ngModel)]="UserData.email"
+            <input
+              type="text"
+              [(ngModel)]="UserData.data.email"
               name="email"
               id="email"
               class="block w-full p-3 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700"
-              placeholder="Enter your email">
+              placeholder="Enter your email"
+            />
           </div>
       
           <div class="w-full">
-            <input type="text"
-              [(ngModel)]="UserData.phoneNumber"
-              name="phoneNumber"
-              id="phoneNumber"
+            <input
+              type="text"
+              [(ngModel)]="UserData.data.phone"
+              name="phone"
+              id="phone"
               class="block w-full p-3 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700"
-              placeholder="Enter your phone number">
+              placeholder="Enter your phone number"
+            />
           </div>
         </div>
       
         <div class="mt-4">
-          <button type="submit" class="text-white w-full bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+          <button
+            type="submit"
+            class="text-white w-full bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+          >
             Update Profile
           </button>
         </div>
       </form>
-      
-      
-      
     </div>
   </div>
 </section>

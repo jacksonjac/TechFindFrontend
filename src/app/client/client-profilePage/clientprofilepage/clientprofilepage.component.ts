@@ -15,7 +15,7 @@ export class ClientprofilepageComponent {
 
   constructor(private auth: UserAuthService,private toaster:ToastService) {}
 
-  ngOnInit(): void {
+  ngOnInit(){
      this.getUserData();
   }
 
@@ -59,9 +59,33 @@ export class ClientprofilepageComponent {
       }
     );
   }
-  updateUserProfile(){
+  updateUserProfile() {
+    const updatedData = {
+      name: this.UserData.data.name,
+      district: this.UserData.data.district,
+      email: this.UserData.data.email,
+      phone: this.UserData.data.phone,
+    };
     
-  }
+    const UserId = localStorage.getItem("Userid");
+    if(UserId){
+      this.auth.updateUserProfile(UserId, updatedData).subscribe(
+        (response: any) => {
+
+          console.log(response,"the responce from backend")
+          console.log("Profile updated successfully", response);
+          this.toaster.showSuccess('Profile updated successfully', '');
+          this.UserData = response.data; // Update the local user data with the response
+        },
+        (error: any) => {
+          console.error('Profile update failed:', error);
+        }
+      );
+    }
+
+    }
+    
+
   }
 
  

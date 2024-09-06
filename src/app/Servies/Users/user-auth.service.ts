@@ -131,5 +131,11 @@ logoutUser(): void {
   seenEmit(data:any){
 
   }
+  updateUserProfile(userId: string, updatedData: any) {
+
+    console.log("passing userupdateprofile",userId,updatedData)
+    return this.http.post(`${this.baseUrl}user/updateUserProfile?userid=${userId}`, updatedData);
+  }
+  
  
 }

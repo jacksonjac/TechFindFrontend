@@ -72,8 +72,7 @@ export class UserAuthService {
   addAddress_slotbook(Data:any){
     console.log("get appoinment data address and slot and booking passing..", Data);
     return  this.http.post<any>(`${this.baseUrl}user/Add_newAdrres`,Data);
-
-  }
+}
   getAppoimentDataById(slotId: any) {
      console.log("passing chats gets api ..")
     return this.http.get(`${this.baseUrl}user/AppoinmentById?Id=${slotId}`, {});

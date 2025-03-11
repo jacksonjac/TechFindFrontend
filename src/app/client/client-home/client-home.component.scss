@@ -1,0 +1,242 @@
+
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @keyframes reveal {
+            0% { transform: scaleX(0); transform-origin: left; }
+            100% { transform: scaleX(1); transform-origin: left; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .reveal-line {
+            animation: reveal 1.5s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        }
+
+        .marquee {
+            animation: marquee 30s linear infinite;
+        }
+
+        .nav-blur {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .image-gradient {
+            background: linear-gradient(to right, rgba(0,0,0,0.95), rgba(0,0,0,0.3));
+        }
+
+        @media (max-width: 768px) {
+            .image-gradient {
+                background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.95));
+            }
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        h1, h2, .logo {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .hover-line {
+            position: relative;
+        }
+
+        .hover-line::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+
+        .hover-line:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            transform: translateY(-100%);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mobile-menu.active {
+            transform: translateY(0);
+        }
+     
+        @keyframes float {
+          0% { transform: translateY(0px); }
+          50% { transform: translateY(-20px); }
+          100% { transform: translateY(0px); }
+        }
+        .floating {
+          animation: float 6s ease-in-out infinite;
+        }
+        .floating-slow {
+          animation: float 8s ease-in-out infinite;
+        }
+        .floating-slower {
+          animation: float 10s ease-in-out infinite;
+        }
+        @keyframes appear {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes zoomIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        @keyframes moveInCircle {
+            0% {
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(200px, 0);
+            }
+            50% {
+                transform: translate(200px, 200px);
+            }
+            75% {
+                transform: translate(0, 200px);
+            }
+            100% {
+                transform: translate(0, 0); /* Back to the starting point */
+            }
+        }
+        @keyframes wobble {
+            0% {
+                transform: translateX(0%);
+            }
+            15% {
+                transform: translateX(-10%);
+            }
+            30% {
+                transform: translateX(10%);
+            }
+            45% {
+                transform: translateX(-6%);
+            }
+            60% {
+                transform: translateX(6%);
+            }
+            75% {
+                transform: translateX(-3%);
+            }
+            100% {
+                transform: translateX(0%);
+            }
+        }
+        @keyframes flip {
+            from {
+                transform: rotateY(0deg);
+            }
+            to {
+                transform: rotateY(180deg);
+            }
+        }
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        @keyframes skewIn {
+            from {
+                transform: skewX(20deg);
+                opacity: 0;
+            }
+            to {
+                transform: skewX(0deg);
+                opacity: 1;
+            }
+        }
+        .block{ 
+            
+            animation: appear 3s linear;
+            animation-timeline: view();
+            animation-range: entry 0 cover 40%;
+            border-radius: 20px;
+          
+        
+        }
+        .block1{ 
+            
+            animation: skewIn 3s linear;
+            animation-timeline: view();
+            animation-range: entry 0 cover 40%;
+            border-radius: 20px;
+          
+        
+        }
